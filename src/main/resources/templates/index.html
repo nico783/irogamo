@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Welcome</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<h1 th:utext="${welcome}"></h1>
+<h2 th:utext="${message}">..!..</h2>
+
+<a th:href="@{/task-list}">Task List</a>
+<br/><br/>
+<a th:href="@{/origami-list}">Origami</a>
+<br/><br/>
+<a th:href="@{/swagger-ui.html}">Swagger</a>
+
+</body>
+
+</html>

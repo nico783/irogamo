@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Task List</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<h1>Task List</h1>
+<a href="add-task">Add Task</a>
+<br/><br/>
+<div>
+    <table border="1">
+        <tr>
+            <th>Catégorie</th>
+            <th>Projet</th>
+            <th>Label</th>
+            <th>Origami</th>
+        </tr>
+        <tr th:each ="task : ${tasks}">
+            <td th:utext="${task.category}">...</td>
+            <td th:utext="${task.project}">...</td>
+            <td th:utext="${task.label}">...</td>
+            <td th:utext="${task.codeOrigami}">...</td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

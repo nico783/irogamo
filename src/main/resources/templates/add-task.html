@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Add Task</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<h1>Create a Task:</h1>
+
+<form th:action="@{/add-task}"
+      th:object="${taskForm}" method="POST">
+    Categorie:
+    <select th:field="*{category}" >
+        <option th:each="cat : ${T(myapp.entity.Category).values()}"
+                th:value="${cat}" th:text="${cat} "></option>
+    </select>
+    <br/>
+    Projet:
+    <select th:field="*{project}">
+        <option th:each="proj : ${T(myapp.entity.Project).values()}"
+                th:value="${proj}" th:text="${proj}"></option>
+    </select>
+    <br/>
+    Label:
+    <input type="text" th:field="*{label}" />
+    <br/>
+    Code Origami:
+    <input type="text" th:field="*{codeOrigami}" />
+    <br/>
+    <input type="submit" value="Create" />
+</form>
+
+<br/>
+
+<!-- Check if errorMessage is not null and not empty -->
+
+<div th:if="${errorMessage}" th:utext="${errorMessage}"
+     style="color:red;font-style:italic;">
+    ...
+</div>
+
+</body>
+</html>

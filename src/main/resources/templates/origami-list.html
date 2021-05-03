@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Task List</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<h1>Origami</h1>
+<br/><br/>
+<!--<h2 th:utext="${#temporals.formatISO(start-date)}"></h2>-->
+<!--<h2 th:utext="${taskQueryDto.getDateMax()}"></h2>-->
+<br/><br/>
+<div>
+    <table border="1">
+        <tr>
+            <th>Origami</th>
+            <th>Temps Passé (en jours)</th>
+        </tr>
+        <tr th:each ="origamiResponse : ${origamiResponses}">
+            <td th:utext="${origamiResponse.origami}">...</td>
+            <td th:utext="${origamiResponse.durationInDays}">...</td>
+        </tr>
+    </table>
+</div>
+
+<form th:action="@{/origami-list}" th:object="${taskQueryDto}" method="POST">
+    Début:
+    <input type="date" th:field="*{dateMin}" />
+    <br/>
+    Fin:
+    <input type="date" th:field="*{dateMax}" />
+    <br/>
+    <input type="submit" value="change" />
+</form>
+
+</body>
+</html>
