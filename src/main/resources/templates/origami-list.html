@@ -7,9 +7,15 @@
 </head>
 <body>
 <h1>Origami</h1>
-<br/><br/>
-<!--<h2 th:utext="${#temporals.formatISO(start-date)}"></h2>-->
-<!--<h2 th:utext="${taskQueryDto.getDateMax()}"></h2>-->
+<form th:action="@{/origami-list}" th:object="${taskQueryDto}" method="POST">
+    Début:
+    <input type="date" th:field="*{dateMin}" />
+    &emsp;
+     Fin:
+    <input type="date" th:field="*{dateMax}" />
+    &emsp;
+    <input type="submit" value="change" />
+</form>
 <br/><br/>
 <div>
     <table border="1">
@@ -23,16 +29,6 @@
         </tr>
     </table>
 </div>
-
-<form th:action="@{/origami-list}" th:object="${taskQueryDto}" method="POST">
-    Début:
-    <input type="date" th:field="*{dateMin}" />
-    <br/>
-    Fin:
-    <input type="date" th:field="*{dateMax}" />
-    <br/>
-    <input type="submit" value="change" />
-</form>
 
 </body>
 </html>
