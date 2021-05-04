@@ -7,6 +7,8 @@ import myapp.entity.Task;
 
 public class TaskResponseDto {
 
+    private final static Integer MINUTES_IN_HOUR = 60;
+
     private String userName;
 
     private Task task;
@@ -22,6 +24,12 @@ public class TaskResponseDto {
     private String origami;
 
     private Integer durationInMin;
+
+    public String getDurationInHours(){
+        int heures = durationInMin/MINUTES_IN_HOUR;
+        int minutes = durationInMin % MINUTES_IN_HOUR;
+        return heures != 0 ? heures + "h " + minutes +"min" : minutes +"min";
+    }
 
     public String getUserName() {
         return userName;
