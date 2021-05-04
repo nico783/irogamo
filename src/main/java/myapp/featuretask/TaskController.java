@@ -65,7 +65,7 @@ public class TaskController {
             return "redirect:/task-list";
         }
 
-        model.addAttribute("errorMessage", "Tous les champs sont requis pour l'ajout d'une nouvelle task.");
+        model.addAttribute("errorMessage", "Tous les champs sont requis pour l'ajout d'une nouvelle tâche.");
         return "add-task";
     }
 

@@ -40,7 +40,7 @@ public class OrigamiController {
         taskQueryDto.setDateMax(endDate);
         model.addAttribute("taskQueryDto", taskQueryDto);
 
-        List<OrigamiResponseDto> origamiResponses = irogamoService.getOrigamiStatistics((TaskQueryDto) model.getAttribute("taskQueryDto")).stream()
+        List<OrigamiResponseDto> origamiResponses = irogamoService.getOrigamiStatistics(taskQueryDto).stream()
                 .sorted(Comparator.comparing(OrigamiResponseDto::getDurationInMin))
                 .collect(Collectors.toList());
         model.addAttribute("origamiResponses", origamiResponses);

@@ -1,4 +1,4 @@
-package myapp.dto;
+package myapp.featurework;
 
 import myapp.entity.BusinessUnit;
 import myapp.entity.Category;

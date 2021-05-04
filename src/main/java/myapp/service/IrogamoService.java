@@ -4,6 +4,7 @@ import myapp.dto.*;
 import myapp.entity.*;
 import myapp.featureorigami.OrigamiResponseDto;
 import myapp.featureorigami.TaskQueryDto;
+import myapp.featurework.WorkDoneDto;
 import myapp.repository.TaskRepository;
 import myapp.repository.UserRepository;
 import myapp.repository.WorkDoneRepository;

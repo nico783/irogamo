@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Work Done List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<div class="container-fluid">
+    <h1>Travaux Effectués</h1>
+    <br/>
+    <form th:action="@{/work-list}" th:object="${taskQueryDto}" method="POST">
+        Début:
+        <input type="date" th:field="*{dateMin}"/>
+        &emsp;
+        Fin:
+        <input type="date" th:field="*{dateMax}"/>
+        &emsp;
+        <input type="submit" value="change"/>
+    </form>
+</div>
+<br/>
+<div class="container-fluid">
+<a href="/add-work">Add Work</a>
+</div>
+<br/>
+<div class="container-fluid">
+    <table border="1">
+        <tr>
+            <th>Catégorie</th>
+            <th>Projet</th>
+            <th>Label</th>
+            <th>B.U.</th>
+            <th>Temps passé (en min)</th>
+        </tr>
+        <tr th:each="work : ${tasksResponses}">
+            <td th:utext="${work.category}">...</td>
+            <td th:utext="${work.project}">...</td>
+            <td th:utext="${work.label}">...</td>
+            <td th:utext="${work.businessUnit}">...</td>
+            <td th:utext="${work.durationInMin}">...</td>
+        </tr>
+    </table>
+</div>
+<br/>
+<div class="container-fluid">
+<a th:href="@{/index}">Index</a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
