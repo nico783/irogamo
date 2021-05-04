@@ -7,9 +7,10 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
 </head>
 <body>
+<div class="container">
 <h1>Temps Passé par Code Origami</h1>
-
-<div class="container-fluid">
+</div>
+<div class="container">
 <form th:action="@{/origami-list}" th:object="${taskQueryDto}" method="POST">
     Début:
     <input type="date" th:field="*{dateMin}" />
@@ -21,20 +22,24 @@
 </form>
 </div>
 <br/><br/>
-<div class="container-fluid">
-    <table border="1">
+<div class="container">
+    <table class="table">
+        <thead>
         <tr>
-            <th>Origami</th>
-            <th>Temps passé (en jours)</th>
+            <th scope="col">Origami</th>
+            <th scope="col">Temps passé (en jours)</th>
         </tr>
+        </thead>
+        <tbody>
         <tr th:each ="origamiResponse : ${origamiResponses}">
             <td th:utext="${origamiResponse.origami}">...</td>
             <td th:utext="${origamiResponse.durationInDays}">...</td>
         </tr>
+        </tbody>
     </table>
 </div>
 <br/>
-<div class="container-fluid">
+<div class="container">
     <a th:href="@{/index}">Index</a>
 </div>
 

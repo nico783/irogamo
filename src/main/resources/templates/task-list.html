@@ -7,30 +7,37 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
 </head>
 <body>
+<div class="container">
 <h1>Liste des tâches</h1>
-<div class="container-fluid">
+</div>
+
+<div class="container">
 <a href="add-task">Add Task</a>
 </div>
 
-<div class="container-fluid">
-    <table border="1">
+<div class="container">
+    <table class="table">
+        <thead>
         <tr>
-            <th>Catégorie</th>
-            <th>Projet</th>
-            <th>Label</th>
-            <th>Origami</th>
+            <th scope="col">Catégorie</th>
+            <th scope="col">Projet</th>
+            <th scope="col">Label</th>
+            <th scope="col">Origami</th>
         </tr>
+        </thead>
+        <tbody>
         <tr th:each ="task : ${tasks}">
             <td th:utext="${task.category}">...</td>
             <td th:utext="${task.project}">...</td>
             <td th:utext="${task.label}">...</td>
             <td th:utext="${task.codeOrigami}">...</td>
         </tr>
+        </tbody>
     </table>
 </div>
 
 <br/>
-<div class="container-fluid">
+<div class="container">
     <a th:href="@{/index}">Index</a>
 </div>
 
