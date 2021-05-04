@@ -33,6 +33,8 @@ public class WorkController {
     private LocalDate startDate;
     private LocalDate endDate;
 
+    private List<String> existingLabels;
+
     @RequestMapping(value = {"/work-list"}, method = RequestMethod.GET)
     public String workList(Model model) {
         // si les dates ne sont pas définies, on prend comme période la journée en cours
@@ -62,16 +64,17 @@ public class WorkController {
     @RequestMapping(value = {"/add-work"}, method = RequestMethod.GET)
     public String showAddWorkPage(Model model) {
         WorkDoneDto workForm = new WorkDoneDto();
+        workForm.setCreation(LocalDate.now());
         model.addAttribute("workForm", workForm);
 
         // Récupération des labels pour initialiser liste déroulante dans le front
-        List<String> existingLabels = irogamoService.findAll().stream().map(TaskDto::getLabel).sorted(Comparator.naturalOrder()).collect(Collectors.toList());
+        existingLabels = irogamoService.findAll().stream().map(TaskDto::getLabel).sorted(Comparator.naturalOrder()).collect(Collectors.toList());
         model.addAttribute("existingLabels", existingLabels);
         return "add-work";
     }
 
     @RequestMapping(value = {"/add-work"}, method = RequestMethod.POST)
-    public String addTask(Model model,
+    public String addwork(Model model,
                           @ModelAttribute("workForm") WorkDoneDto workForm) {
         Category category = workForm.getCategory();
         Project project = workForm.getProject();
@@ -84,7 +87,8 @@ public class WorkController {
                 || businessUnit == null
                 || duration == null
                 || label == null) {
-            model.addAttribute("errorMessage", "Tous les champs à l'exception de date et description sont requis pour l'ajout d'un nouveau travail.");
+            model.addAttribute("errorMessage", "Tous les champs à l'exception de Date et Description sont requis pour l'ajout d'un nouveau travail.");
+            model.addAttribute("existingLabels", existingLabels);
             return "add-work";
         }
 
@@ -92,6 +96,7 @@ public class WorkController {
             irogamoService.save(workForm);
         } catch (TaskNotFindException e) {
             model.addAttribute("errorMessage", e.getMessage());
+            model.addAttribute("existingLabels", existingLabels);
             return "add-work";
         }
         return "redirect:/work-list";
