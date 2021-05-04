@@ -17,11 +17,11 @@
 <form th:action="@{/add-task}"
       th:object="${taskForm}" method="POST">
     <div class="container">
-        <label for="exampleFormControlInput1" class="form-label">Catégorie : </label>
-    <select class="form-select" aria-label="Default select example" th:field="*{category}">
-        <option th:each="cat : ${T(myapp.entity.Category).values()}"
-                th:value="${cat}" th:text="${cat} "></option>
-    </select>
+        <label class="form-label">Catégorie : </label>
+        <select class="form-select" aria-label="Default select example" th:field="*{category}">
+            <option th:each="cat : ${T(myapp.entity.Category).values()}"
+                    th:value="${cat}" th:text="${cat} "></option>
+        </select>
     </div>
     <br/>
     <div class="container">
@@ -45,7 +45,7 @@
     <br/>
     <br/>
     <div class="container">
-        <input type="submit" class="form-control" id="exampleFormControlInput3" value="Créer">
+        <input type="submit" class="form-control" value="Créer">
     </div>
     <br/>
     <div class="container" th:if="${errorMessage}" th:utext="${errorMessage}"

@@ -7,44 +7,64 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
 </head>
 <body>
+<div class="container">
 <h1>Renseigner Travail</h1>
+</div>
 <div class="container-fluid">
 <form th:action="@{/add-work}"
       th:object="${workForm}" method="POST">
-    Categorie:
-    <select th:field="*{category}" >
-        <option th:each="cat : ${T(myapp.entity.Category).values()}"
-                th:value="${cat}" th:text="${cat} "></option>
-    </select>
+    <div class="container">
+        <label class="form-label">Catégorie : </label>
+        <select class="form-select" aria-label="Default select example" th:field="*{category}">
+            <option th:each="cat : ${T(myapp.entity.Category).values()}"
+                    th:value="${cat}" th:text="${cat} "></option>
+        </select>
+    </div>
     <br/>
-    Projet:
-    <select th:field="*{project}">
-        <option th:each="proj : ${T(myapp.entity.Project).values()}"
-                th:value="${proj}" th:text="${proj}"></option>
-    </select>
+    <div class="container">
+        <label class="form-label">Projet : </label>
+        <select class="form-select" aria-label="Default select example" th:field="*{project}">
+            <option th:each="proj : ${T(myapp.entity.Project).values()}"
+                    th:value="${proj}" th:text="${proj}"></option>
+        </select>
+    </div>
     <br/>
-    Label:
-    <select th:field="*{label}">
-        <option th:each="lab : ${existingLabels}"
-                th:value="${lab}" th:text="${lab}"></option>
-    </select>
+    <div class="container">
+        <label class="form-label">Label : </label>
+        <select class="form-select" aria-label="Default select example" th:field="*{label}">
+            <option th:each="lab : ${existingLabels}"
+                    th:value="${lab}" th:text="${lab}"></option>
+        </select>
+    </div>
     <br/>
-    B.U.:
-    <select th:field="*{businessUnit}">
-        <option th:each="proj : ${T(myapp.entity.BusinessUnit).values()}"
-                th:value="${proj}" th:text="${proj}"></option>
-    </select>
+    <div class="container">
+        <label class="form-label">B.U. : </label>
+        <select class="form-select" aria-label="Default select example" th:field="*{businessUnit}">
+            <option th:each="bu : ${T(myapp.entity.BusinessUnit).values()}"
+                    th:value="${bu}" th:text="${bu}"></option>
+        </select>
+    </div>
     <br/>
-    Description:
-    <input type="text" th:field="*{description}" />
+    <div class="container">
+        <label for="descInputLabel" class="form-label">Description : </label>
+        <input type="text" class="form-control" id="descInputLabel" th:field="*{description}">
+    </div>
     <br/>
-    Temps passé (en min):
-    <input type="number" th:field="*{duration}" />
+    <div class="container">
+        <label for="timeInputLabel" class="form-label">Temps passé (en min) :</label>
+        <input type="number" class="form-control" id="timeInputLabel" th:field="*{duration}">
+    </div>
     <br/>
-    Date:
-    <input type="date" th:field="*{creation}" />
+    <div class="container">
+        <label for="dateInputLabel" class="form-label">Date :</label>
+        <input type="date" class="form-control" id="dateInputLabel" th:field="*{creation}">
+    </div>
     <br/>
-    <input type="submit" value="Create" />
+    <br/>
+    <br/>
+    <div class="container">
+        <input type="submit" class="form-control" value="Créer">
+    </div>
 </form>
 </div>
 <br/>
@@ -54,7 +74,7 @@
     ...
 </div>
 <br/>
-<div class="container-fluid">
+<div class="container">
     <a th:href="@{/index}">Index</a>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
