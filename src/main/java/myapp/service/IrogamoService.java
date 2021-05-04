@@ -2,6 +2,7 @@ package myapp.service;
 
 import myapp.dto.*;
 import myapp.entity.*;
+import myapp.exception.TaskNotFindException;
 import myapp.featureorigami.OrigamiResponseDto;
 import myapp.featureorigami.TaskQueryDto;
 import myapp.featurework.WorkDoneDto;
@@ -57,7 +58,7 @@ public class IrogamoService {
                 return workDoneRepository.save(workDoneNew);
             }
         } else {
-            throw new IllegalStateException("La tache " + workDoneDto.getLabel() + " n'existe pas (pour le couple catégorie/projet : " + workDoneDto.getCategory() + "/" + workDoneDto.getProject() + "). Il faut la créer avant d'y ajouter du temps.");
+            throw new TaskNotFindException("La tache " + workDoneDto.getLabel() + " n'existe pas (pour le couple catégorie/projet : " + workDoneDto.getCategory() + "/" + workDoneDto.getProject() + "). Il faut la créer avant d'y ajouter du temps.");
         }
     }
 

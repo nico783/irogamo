@@ -4,6 +4,7 @@ import myapp.dto.TaskResponseDto;
 import myapp.entity.BusinessUnit;
 import myapp.entity.Category;
 import myapp.entity.Project;
+import myapp.exception.TaskNotFindException;
 import myapp.featureorigami.TaskQueryDto;
 import myapp.featuretask.TaskDto;
 import myapp.service.IrogamoService;
@@ -76,22 +77,24 @@ public class WorkController {
         Project project = workForm.getProject();
         String label = workForm.getLabel();
         BusinessUnit businessUnit = workForm.getBusinessUnit();
-        LocalDate date = workForm.getCreation();
-        String description = workForm.getDescription();
         Integer duration = workForm.getDuration();
 
-        if (category != null
-                && project != null
-                && businessUnit != null
-                && duration != null
-                && label != null && label.length() > 0
-                && description != null && description.length() > 0) {
-            irogamoService.save(workForm);
-            return "redirect:/work-list";
+        if (category == null
+                || project == null
+                || businessUnit == null
+                || duration == null
+                || label == null) {
+            model.addAttribute("errorMessage", "Tous les champs à l'exception de date et description sont requis pour l'ajout d'un nouveau travail.");
+            return "add-work";
         }
 
-        model.addAttribute("errorMessage", "Tous les champs à l'exception de date sont requis pour l'ajout d'un nouveau travail.");
-        return "add-work";
+        try {
+            irogamoService.save(workForm);
+        } catch (TaskNotFindException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "add-work";
+        }
+        return "redirect:/work-list";
     }
 
 }
