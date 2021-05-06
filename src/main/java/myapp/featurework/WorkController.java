@@ -68,7 +68,7 @@ public class WorkController {
         model.addAttribute("workForm", workForm);
 
         // Récupération des labels pour initialiser liste déroulante dans le front
-        existingLabels = irogamoService.findAll().stream().map(TaskDto::getLabel).sorted(Comparator.naturalOrder()).collect(Collectors.toList());
+        existingLabels = irogamoService.findAll().stream().map(TaskDto::getLabel).sorted(Comparator.naturalOrder()).distinct().collect(Collectors.toList());
         model.addAttribute("existingLabels", existingLabels);
         return "add-work";
     }
