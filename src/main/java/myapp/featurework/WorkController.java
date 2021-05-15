@@ -33,6 +33,9 @@ public class WorkController {
     private LocalDate startDate;
     private LocalDate endDate;
 
+    private Project project;
+    private Category category;
+
     private List<String> existingLabels;
 
     @RequestMapping(value = {"/work-list"}, method = RequestMethod.GET)
@@ -61,23 +64,42 @@ public class WorkController {
         return "redirect:/work-list";
     }
 
+    @RequestMapping(value = {"/select-basework"}, method = RequestMethod.GET)
+    public String selectBase(Model model, @ModelAttribute("workForm") WorkDoneDto workForm) {
+        this.category = workForm.getCategory();
+        this.project = workForm.getProject();
+        return "redirect:/add-work";
+    }
+
     @RequestMapping(value = {"/add-work"}, method = RequestMethod.GET)
     public String showAddWorkPage(Model model) {
         WorkDoneDto workForm = new WorkDoneDto();
         workForm.setCreation(LocalDate.now());
+
+        if (project == null && category == null) {
+            project = Project.QSF;
+            category = Category.RUN;
+        }
+
+        workForm.setProject(this.project);
+        workForm.setCategory(this.category);
+
         model.addAttribute("workForm", workForm);
 
-        // Récupération des labels pour initialiser liste déroulante dans le front
-        existingLabels = irogamoService.findAll().stream().map(TaskDto::getLabel).sorted(Comparator.naturalOrder()).distinct().collect(Collectors.toList());
+        // Récupération des labels pour renseigner la liste déroulante du front
+        existingLabels = irogamoService.findAll().stream()
+                .filter(taskDto -> taskDto.getProject() == project && taskDto.getCategory() == category)
+                .map(TaskDto::getLabel)
+                .sorted(Comparator.naturalOrder())
+                .distinct()
+                .collect(Collectors.toList());
+
         model.addAttribute("existingLabels", existingLabels);
         return "add-work";
     }
 
     @RequestMapping(value = {"/add-work"}, method = RequestMethod.POST)
-    public String addwork(Model model,
-                          @ModelAttribute("workForm") WorkDoneDto workForm) {
-        Category category = workForm.getCategory();
-        Project project = workForm.getProject();
+    public String addwork(Model model, @ModelAttribute("workForm") WorkDoneDto workForm) {
         String label = workForm.getLabel();
         BusinessUnit businessUnit = workForm.getBusinessUnit();
         Integer duration = workForm.getDuration();
@@ -92,6 +114,8 @@ public class WorkController {
             return "add-work";
         }
 
+        workForm.setCategory(this.category);
+        workForm.setProject(this.project);
         try {
             irogamoService.save(workForm);
         } catch (TaskNotFindException e) {
@@ -101,5 +125,6 @@ public class WorkController {
         }
         return "redirect:/work-list";
     }
+
 
 }
