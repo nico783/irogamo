@@ -34,7 +34,7 @@ public class StatisticRepository {
                 " and d.creation >= :minim " +
                 " and d.creation <= :maxim ";
 
-        if(userName != null) {
+        if(userName != null && !"All".equals(userName)) {
             query += " and u.username = :username ";
         }
 
@@ -42,7 +42,7 @@ public class StatisticRepository {
 
         TypedQuery<StatisticDto> typedQuery = em.createQuery(query, StatisticDto.class);
 
-        if(userName != null) {
+        if(userName != null && !"All".equals(userName)) {
             typedQuery.setParameter("username", userName);
         }
 
