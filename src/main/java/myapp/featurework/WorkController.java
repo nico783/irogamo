@@ -103,13 +103,15 @@ public class WorkController {
         String label = workForm.getLabel();
         BusinessUnit businessUnit = workForm.getBusinessUnit();
         Integer duration = workForm.getDuration();
+        LocalDate date = workForm.getCreation();
 
         if (category == null
                 || project == null
                 || businessUnit == null
                 || duration == null
-                || label == null) {
-            model.addAttribute("errorMessage", "Tous les champs à l'exception de Date et Description sont requis pour l'ajout d'un nouveau travail.");
+                || label == null
+                || date == null) {
+            model.addAttribute("errorMessage", "Tous les champs à l'exception de Description sont requis pour l'ajout d'un nouveau travail.");
             model.addAttribute("existingLabels", existingLabels);
             return "add-work";
         }

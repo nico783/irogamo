@@ -39,7 +39,7 @@ public class StatisticController {
     private String userName;
     private List<String> existingUsers = new ArrayList<>();
 
-    List<StatisticDto> statisticResponses;
+    private List<StatisticDto> statisticResponses;
 
     @RequestMapping(value = {"/statistic-list"}, method = RequestMethod.GET)
     public String statisticList(Model model) {
@@ -82,14 +82,14 @@ public class StatisticController {
     public void getStatsCsv(HttpServletResponse response) throws IOException {
         List<StatisticDto> dtos = statisticResponses;
 
-        response.setContentType("text/csv; charset=UTF-8");
+        response.setContentType("text/csv; charset=Iso-8859-1");
         String headerKey = "Content-Disposition";
         String headerValue = "attachment; filename="+"export_works.csv";
         response.setHeader(headerKey, headerValue);
 
         ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.EXCEL_NORTH_EUROPE_PREFERENCE);
-        String[] csvHeader = {"username", "date", "category", "project", "bu", "codeOrigami", "description", "duration"};
-        String[] nameMapping = {"username", "date", "category", "project", "bu", "codeOrigami", "description", "duration"};
+        String[] csvHeader = {"username", "date", "category", "project", "label", "bu", "codeOrigami", "description", "duration"};
+        String[] nameMapping = {"username", "date", "category", "project", "label", "bu", "codeOrigami", "description", "duration"};
 
         csvWriter.writeHeader(csvHeader);
 

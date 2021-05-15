@@ -12,20 +12,30 @@ public class StatisticDto {
     private LocalDate date;
     private Category category;
     private Project project;
+    private String label;
     private BusinessUnit bu;
     private String codeOrigami;
     private String description;
     private Integer duration;
 
-    public StatisticDto(String username, LocalDate date, Category category, Project project, BusinessUnit bu, String codeOrigami, String description, Integer duration) {
+    public StatisticDto(String username, LocalDate date, Category category, Project project, String label, BusinessUnit bu, String codeOrigami, String description, Integer duration) {
         this.username = username;
         this.date = date;
         this.category = category;
         this.project = project;
+        this.label = label;
         this.bu = bu;
         this.codeOrigami = codeOrigami;
         this.description = description;
         this.duration = duration;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     public String getUsername() {
@@ -99,6 +109,7 @@ public class StatisticDto {
                 ", date=" + date +
                 ", category=" + category +
                 ", project=" + project +
+                ", label='" + label + '\'' +
                 ", bu=" + bu +
                 ", codeOrigami='" + codeOrigami + '\'' +
                 ", description='" + description + '\'' +

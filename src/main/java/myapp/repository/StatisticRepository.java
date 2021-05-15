@@ -22,6 +22,7 @@ public class StatisticRepository {
                 " d.creation, " +
                 " t.category, " +
                 " t.project, " +
+                " t.label, " +
                 " d.businessUnit, " +
                 " t.codeOrigami, " +
                 " d.description, " +
