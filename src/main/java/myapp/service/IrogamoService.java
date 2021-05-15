@@ -5,7 +5,9 @@ import myapp.entity.*;
 import myapp.exception.TaskNotFindException;
 import myapp.featureorigami.OrigamiResponseDto;
 import myapp.featureorigami.TaskQueryDto;
+import myapp.featurestatistic.StatisticDto;
 import myapp.featurework.WorkDoneDto;
+import myapp.repository.StatisticRepository;
 import myapp.repository.TaskRepository;
 import myapp.repository.UserRepository;
 import myapp.repository.WorkDoneRepository;
@@ -24,11 +26,14 @@ public class IrogamoService {
     private final WorkDoneRepository workDoneRepository;
     private final TaskRepository taskRepository;
     private final UserRepository userRepository;
+    private final StatisticRepository statisticRepository;
 
-    public IrogamoService(WorkDoneRepository workDoneRepository, TaskRepository taskRepository, UserRepository userRepository) {
+
+    public IrogamoService(WorkDoneRepository workDoneRepository, TaskRepository taskRepository, UserRepository userRepository, StatisticRepository statisticRepository) {
         this.workDoneRepository = workDoneRepository;
         this.taskRepository = taskRepository;
         this.userRepository = userRepository;
+        this.statisticRepository = statisticRepository;
     }
 
     @Transactional
@@ -91,6 +96,11 @@ public class IrogamoService {
             }).ifPresent(results::add);
         }
         return results;
+    }
+
+    @Transactional
+    public List<StatisticDto> getFullStatistics(TaskQueryDto param) {
+        return statisticRepository.findStatistics(param.getUserName(), param.getDateMin(), param.getDateMax());
     }
 
     @Transactional

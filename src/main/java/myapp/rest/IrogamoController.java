@@ -5,6 +5,7 @@ import myapp.entity.Task;
 import myapp.entity.WorkDone;
 import myapp.featureorigami.OrigamiResponseDto;
 import myapp.featureorigami.TaskQueryDto;
+import myapp.featurestatistic.StatisticDto;
 import myapp.featurework.WorkDoneDto;
 import myapp.service.IrogamoService;
 import myapp.featuretask.TaskDto;
@@ -15,7 +16,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.supercsv.io.CsvBeanWriter;
+import org.supercsv.io.ICsvBeanWriter;
+import org.supercsv.prefs.CsvPreference;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -52,5 +58,31 @@ public class IrogamoController {
     @PostMapping("/tasks")
     public ResponseEntity<Task> saveTasks(TaskDto taskDto) {
         return new ResponseEntity<>(irogamoService.save(taskDto), HttpStatus.OK);
+    }
+
+    @GetMapping("/stats")
+    public ResponseEntity<List<StatisticDto>> getStats(TaskQueryDto param) {
+        return new ResponseEntity<>(irogamoService.getFullStatistics(param), HttpStatus.OK);
+    }
+
+    @GetMapping("/stats/csv")
+    public void getStatsCsv(TaskQueryDto param, HttpServletResponse response) throws IOException {
+        List<StatisticDto> dtos = irogamoService.getFullStatistics(param);
+
+        response.setContentType("text/csv; charset=UTF-8");
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename="+"export_works.csv";
+        response.setHeader(headerKey, headerValue);
+
+        ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.EXCEL_NORTH_EUROPE_PREFERENCE);
+        String[] csvHeader = {"username", "date", "category", "project", "bu", "codeOrigami", "description", "duration"};
+        String[] nameMapping = {"username", "date", "category", "project", "bu", "codeOrigami", "description", "duration"};
+
+        csvWriter.writeHeader(csvHeader);
+
+        for (StatisticDto dto : dtos) {
+            csvWriter.write(dto, nameMapping);
+        }
+        csvWriter.close();
     }
 }
